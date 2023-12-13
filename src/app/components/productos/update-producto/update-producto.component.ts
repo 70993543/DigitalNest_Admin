@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GLOBAL } from 'src/app/services/GLOBAL';
+import { AdminService } from 'src/app/services/admin.service';
 import { ProductoService } from 'src/app/services/producto.service';
 
 declare let iziToast: any;
@@ -22,11 +23,13 @@ export class UpdateProductoComponent implements OnInit{
   public id:any;
   public token: any;
   public url:any;
+  public config_global: any = { }
 
   constructor(
     private _activateRoute: ActivatedRoute,
     private _productoService: ProductoService,
-    private _router: Router
+    private _router: Router,
+    private _adminService: AdminService
     
   ){
     this.config = {
@@ -34,6 +37,14 @@ export class UpdateProductoComponent implements OnInit{
     }
     this.token = localStorage.getItem('token');
     this.url = GLOBAL.url;
+
+    this._adminService.obtener_config_public().subscribe({
+      next: response => {
+        this.config_global = response.data
+        console.log(this.config_global);
+        
+      }
+    })
   }
 
   ngOnInit(): void{
