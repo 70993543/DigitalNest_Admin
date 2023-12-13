@@ -66,7 +66,7 @@ export class AdminService {
       fd.append('titulo', data.titulo);
       fd.append('serie', data.serie);
       fd.append('correlativo', data.correlativo);
-      fd.append('categorias', data.categorias);
+      fd.append('categorias', JSON.stringify(data.categorias));
       fd.append('logo', data.logo);
 
       return this._http.put(this.url + 'actualizar_config_admin/'+id, fd, {
@@ -78,5 +78,9 @@ export class AdminService {
         headers: headers,
       });
     }
+  }
+  obtener_config_public():Observable<any>{
+    let headers = new HttpHeaders().set('Content-type','application/json');
+    return this._http.get(this.url + 'obtener_config_publico', {headers: headers})
   }
 }

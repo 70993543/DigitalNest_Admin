@@ -19,6 +19,7 @@ export class CreateProductoComponent {
   public config: any = {};
   public token: any;
   public load_btn = false;
+  public config_global: any = {};
 
   constructor(
     private _productoService: ProductoService,
@@ -29,6 +30,13 @@ export class CreateProductoComponent {
       height: 500,
     };
     this.token = this._adminService.getToken();
+    this._adminService.obtener_config_public().subscribe({
+      next: response => {
+        this.config_global = response.data
+        console.log(this.config_global);
+        
+      }
+    })
   }
 
   registro(registroForm: NgForm) {
